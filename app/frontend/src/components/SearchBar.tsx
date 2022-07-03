@@ -10,6 +10,11 @@ export default function SearchBar(props: SearchBarProps) {
 
   const [inputText, setinputText] = useState('')
 
+  function saveButtonAction(props: SearchBarProps) {
+    props.tasksOnChange?.(inputText);
+    setinputText('')
+  }
+
   return (
     <div className="flex w-full">
       <Input
@@ -17,7 +22,7 @@ export default function SearchBar(props: SearchBarProps) {
         onChange={setinputText}
       ></Input>
       <Button
-        onClick={() => props.tasksOnChange?.(inputText)}
+        onClick={() => saveButtonAction(props)}
       >Save</Button>
       <Button
       >Search</Button>
