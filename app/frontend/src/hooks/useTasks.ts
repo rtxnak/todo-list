@@ -11,42 +11,43 @@ export default function useTasks() {
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
 
   useEffect(() => { getAllTasks() }, [])
-
-  function getAllTasks(tasks = undefined) {
+  
+  function getAllTasks() {
     const response = getAll(tasks)
     setTasks(response);
   }
 
   function createNewTask(newTask: string) {
-    createTask(tasks, newTask);
+    const newTasks = createTask(tasks, newTask);
+    setTasks(newTasks);
     setTaskToggle(!taskToggle)
-    getAllTasks(tasks);
   }
 
   function updateTaskStatus(updateTask: Task, status: string) {
     const id = updateTask.id
-    const newtasks = updateTaskStatusFunc(tasks, id, status)
+    const newTasks = updateTaskStatusFunc(tasks, id, status)
+    setTasks(newTasks);
     setTaskToggle(!taskToggle)
-    getAllTasks(newtasks);
   }
 
   function removeOneTask(task: Task) {
     const id = task.id.toString()
-    const newtasks = deleteTask(tasks, id);
+    const newTasks = deleteTask(tasks, id);
+    setTasks(newTasks);
     setTaskToggle(!taskToggle)
-    getAllTasks(newtasks);
   }
 
   function updateTaskDescription(updateTask: Task, description: string) {
     const id = updateTask.id
-    updateTaskDescriptionFunc(tasks, id, description)
+    const newTasks = updateTaskDescriptionFunc(tasks, id, description)
+    setTasks(newTasks)
     setTaskToggle(!taskToggle)
   }
 
   function sortAllTasks(tasks: Task[], type: string) {
     const newTasks = sortTasks(tasks, type);
+    setTasks(newTasks)
     setTaskToggle(!taskToggle)
-    getAllTasks(newTasks);
   }
 
   function searchResultTasks(tasks: Task[]){
