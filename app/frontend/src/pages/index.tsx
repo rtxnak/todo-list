@@ -16,7 +16,10 @@ export default function Home() {
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    updateTaskDescription
+    updateTaskDescription,
+    searchResultTasks,
+    searchedTasks,
+    setsearchedTasks,
   } = useTasks();
   return (
     <div className={`
@@ -26,7 +29,12 @@ export default function Home() {
     `}>
       <Layout title={"TO DO LIST"}>
         {!editBarVisbile ?
-          (<InputAndSearchBarProps tasksOnChange={createNewTask} />) :
+          (<InputAndSearchBarProps
+            tasksOnChange={createNewTask}
+            tasks={tasks}
+            searchResultTasks={searchResultTasks}
+            setsearchedTasks={setsearchedTasks}
+          />) :
           <EditBar
             tasksOnChange={updateTaskDescription}
             setEditBarVisbile={setEditBarVisbile}
@@ -34,7 +42,7 @@ export default function Home() {
           />
         }
         <Table
-          tasks={tasks}
+          tasks={searchedTasks.length < 1 ? tasks : searchedTasks}
           statusOnChange={updateTaskStatus}
           removeOneTask={removeOneTask}
           sortAllTasks={sortAllTasks}

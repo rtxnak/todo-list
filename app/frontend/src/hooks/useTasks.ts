@@ -5,6 +5,7 @@ import { getAll, createTask, updateTaskStatusFunc, deleteTask, sortTasks, update
 export default function useTasks() {
 
   const [tasks, setTasks] = useState<Task[]>([])
+  const [searchedTasks, setsearchedTasks] = useState<Task[]>([])
   const [taskToggle, setTaskToggle] = useState<boolean>(false)
   const [editBarVisbile, setEditBarVisbile] = useState<boolean>(false);
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
@@ -48,6 +49,10 @@ export default function useTasks() {
     getAllTasks(newTasks);
   }
 
+  function searchResultTasks(tasks: Task[]){
+    setsearchedTasks(tasks)
+  }
+
   return {
     tasks,
     createNewTask,
@@ -58,6 +63,9 @@ export default function useTasks() {
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    updateTaskDescription
+    updateTaskDescription,
+    searchResultTasks,
+    searchedTasks, 
+    setsearchedTasks
   }
 }
