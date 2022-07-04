@@ -1,4 +1,5 @@
 import express from 'express';
+import taskRouter from './routes/task.route';
 
 class App {
   public app: express.Application
@@ -18,9 +19,7 @@ class App {
   }
 
   private routes(): void {
-    this.app.get('/', (_req, res, _next) => {
-      res.send('TO DO LIST BACKEND')
-    })
+    this.app.use('/', taskRouter);
   }
 }
 
