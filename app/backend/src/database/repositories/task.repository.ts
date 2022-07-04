@@ -12,4 +12,13 @@ export default class TaskRepository {
     const result = await Task.create(task);
     return result;
   };
+
+  update = async (id: number, description: string, status: string) => {
+    const update = await Task.update(
+      { description, status },
+      { where: { id } },
+    );
+    const result = update[0];
+    return result;
+  };
 }
