@@ -18,4 +18,8 @@ taskRouter.post('/', (req, res, next) => {
   taskController.create(req, res, next);
 });
 
+taskRouter.put('/', (req, res, next) => {
+  taskController.update(req, res, next);
+});
+
 export default taskRouter;
