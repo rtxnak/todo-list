@@ -1,16 +1,25 @@
 import { ITaskRepository } from "../interfaces/ITaskRespository.interface";
 import { ITaskFindAllResult } from "../interfaces/ITaskFindAllResult.interface";
+import { ITask } from "../interfaces/ITask.interface";
+import { ITaskCreateResult } from "../interfaces/ITaskCreateResult.interface";
 
 class TaskService {
   private _ITaskRepository: ITaskRepository
 
-  constructor(iTeamRepository: ITaskRepository) {
-    this._ITaskRepository = iTeamRepository
+  constructor(iTaskRepository: ITaskRepository) {
+    this._ITaskRepository = iTaskRepository
   }
 
   async findAll(): Promise<ITaskFindAllResult> {
     const result = await this._ITaskRepository.findAll();
     return { code: 200, result };
+  }
+
+  async create(task: ITask): Promise<ITaskCreateResult> {
+    const taskStatus = task;
+    taskStatus.status = 'pending';
+    const result = await this._ITaskRepository.create(task);
+    return { code: 201, result };
   }
 }
 
