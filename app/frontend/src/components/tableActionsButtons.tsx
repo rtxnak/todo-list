@@ -1,4 +1,4 @@
-import { pendingIcon, onGoingIcon, FinishedIcon, trashIcon } from "../components/Icons"
+import { pendingIcon, onGoingIcon, FinishedIcon, trashIcon, editIcon, ascendingIcon, descendingIcon } from "../components/Icons"
 import Task from "../core/Task";
 
 interface ActionProps {
@@ -103,5 +103,49 @@ export function actionOnFinished(task: Task, props: ActionProps) {
         </button>
       </div>
     </td>
+  )
+}
+
+function editDescription(task: Task, props) {
+  props.setEditBarVisbile?.(true)
+  props.setTaskOnUpdate?.(task)
+}
+
+
+export function editAction(task: Task, props) {
+  return (
+    <button
+      onClick={() => editDescription(task, props)}
+      className={`
+      text-gray-500 rounded-full p-2 m-1
+      hover:bg-purple-50
+      `}>
+      {editIcon}
+    </button>
+  )
+}
+
+export function ascendingSort(props, type: string) {
+  return (
+    <button
+      onClick={() => props.sortAllTasks?.(props.tasks, type)}
+      className={`
+      text-gray-900 rounded-full p-2 m-1
+      hover:bg-purple-50
+      `}>
+      {ascendingIcon}
+    </button>
+  )
+}
+
+export function descendingSort(props) {
+  return (
+    <button
+      className={`
+      text-gray-700 rounded-full p-2 m-1
+      hover:bg-purple-50
+      `}>
+      {descendingIcon}
+    </button>
   )
 }

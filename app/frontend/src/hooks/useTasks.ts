@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import Task from "../core/Task";
-import { getAll, createTask, updateTaskStatusFunc, deleteTask } from "../api/noBackEndApi";
+import { getAll, createTask, updateTaskStatusFunc, deleteTask, sortTasks, updateTaskDescriptionFunc } from "../api/noBackEndApi";
 
 export default function useTasks() {
 
   const [tasks, setTasks] = useState<Task[]>([])
   const [taskToggle, setTaskToggle] = useState<boolean>(false)
+  const [editBarVisbile, setEditBarVisbile] = useState<boolean>(false);
+  const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
 
   useEffect(() => { getAllTasks() }, [])
 
@@ -34,11 +36,28 @@ export default function useTasks() {
     getAllTasks(newtasks);
   }
 
+  function updateTaskDescription(updateTask: Task, description: string) {
+    const id = updateTask.id
+    updateTaskDescriptionFunc(tasks, id, description)
+    setTaskToggle(!taskToggle)
+  }
+
+  function sortAllTasks(tasks: Task[], type: string) {
+    const newTasks = sortTasks(tasks, type);
+    setTaskToggle(!taskToggle)
+    getAllTasks(newTasks);
+  }
 
   return {
     tasks,
     createNewTask,
     updateTaskStatus,
     removeOneTask,
+    sortAllTasks,
+    editBarVisbile,
+    setEditBarVisbile,
+    taskOnUpdate,
+    setTaskOnUpdate,
+    updateTaskDescription
   }
 }

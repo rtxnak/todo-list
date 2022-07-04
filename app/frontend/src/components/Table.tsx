@@ -1,5 +1,5 @@
 import Task from "../core/Task";
-import { actionOnPeding, actionOnOngoing, actionOnFinished} from "../components/tableActionsButtons"
+import { actionOnPeding, actionOnOngoing, actionOnFinished, editAction, ascendingSort, descendingSort } from "../components/tableActionsButtons"
 
 
 interface TableProps {
@@ -15,10 +15,18 @@ export default function Table(props: TableProps) {
   function tableHeader() {
     return (
       <tr>
-        <th className="p-4">Task Description</th>
-        <th className="p-4">Status</th>
-        <th className="p-4">Created Date</th>
-        <th className="p-4">Actions</th>
+        <th className="p-4"><div className="flex justify-left items-center">
+          Task Description{ascendingSort(props, "description")}
+        </div></th>
+        <th className="p-4"><div className="flex justify-left items-center">
+          Status{ascendingSort(props, "status")}
+        </div></th>
+        <th className="p-4"><div className="flex justify-left items-center">
+          Created Date {ascendingSort(props, "date")}
+        </div></th>
+        <th className="p-4"><div className="flex justify-center items-center">
+          Actions
+        </div></th>
       </tr>
     )
   }
@@ -37,7 +45,12 @@ export default function Table(props: TableProps) {
         <tr key={task.id}
           className={`${i % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}
         >
-          <td>{task.description}</td>
+          <td>
+            <div className="flex p-4 text-left items-center">
+              {task.description}
+              {editAction(task, props)}
+            </div>
+          </td>
           <td className="text-left p-4 items-center">{task.status}</td>
           <td className="text-left p-4 items-center">{task.date}</td>
           {tableActions(task, props)}

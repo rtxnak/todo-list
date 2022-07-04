@@ -1,5 +1,6 @@
 import Layout from "../components/Layout"
 import InputAndSearchBarProps from "../components/InputAndSearchBar"
+import EditBar from "../components/EditBar"
 import Table from "../components/Table"
 import useTasks from "../hooks/useTasks"
 
@@ -10,6 +11,12 @@ export default function Home() {
     createNewTask,
     updateTaskStatus,
     removeOneTask,
+    sortAllTasks,
+    editBarVisbile,
+    setEditBarVisbile,
+    taskOnUpdate,
+    setTaskOnUpdate,
+    updateTaskDescription
   } = useTasks();
   return (
     <div className={`
@@ -18,11 +25,21 @@ export default function Home() {
       text-white
     `}>
       <Layout title={"TO DO LIST"}>
-        <InputAndSearchBarProps tasksOnChange={createNewTask} />
+        {!editBarVisbile ?
+          (<InputAndSearchBarProps tasksOnChange={createNewTask} />) :
+          <EditBar
+            tasksOnChange={updateTaskDescription}
+            setEditBarVisbile={setEditBarVisbile}
+            taskOnUpdate={taskOnUpdate}
+          />
+        }
         <Table
           tasks={tasks}
           statusOnChange={updateTaskStatus}
           removeOneTask={removeOneTask}
+          sortAllTasks={sortAllTasks}
+          setEditBarVisbile={setEditBarVisbile}
+          setTaskOnUpdate={setTaskOnUpdate}
         />
       </Layout>
     </div>
