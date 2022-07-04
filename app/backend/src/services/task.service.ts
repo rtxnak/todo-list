@@ -2,6 +2,7 @@ import { ITaskRepository } from "../interfaces/ITaskRespository.interface";
 import { ITaskFindAllResult } from "../interfaces/ITaskFindAllResult.interface";
 import { ITask } from "../interfaces/ITask.interface";
 import { ITaskCreateResult } from "../interfaces/ITaskCreateResult.interface";
+import { ITaskDestroyResult } from "../interfaces/ITaskDestroyResult.interface";
 
 class TaskService {
   private _ITaskRepository: ITaskRepository
@@ -35,6 +36,16 @@ class TaskService {
       return { code: 200, result };
     }
     const result = { message: 'task have not been updated' };
+    return { code: 400, result };
+  }
+
+  async destroy(id: number): Promise<ITaskDestroyResult> {
+    const deletedResult = await this._ITaskRepository.destroy(id);
+    if (deletedResult) {
+      const result = { message: 'task deleted' };
+      return { code: 200, result };
+    }
+    const result = { message: 'task have not been deleted' };
     return { code: 400, result };
   }
 }
