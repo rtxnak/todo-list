@@ -21,4 +21,11 @@ export default class TaskRepository {
     const result = update[0];
     return result;
   };
+
+  destroy = async (id: number) => {
+    const result = await Task.destroy(
+      { where: { id } },
+    )
+    return result;
+  }
 }
