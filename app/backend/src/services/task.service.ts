@@ -21,6 +21,22 @@ class TaskService {
     const result = await this._ITaskRepository.create(task);
     return { code: 201, result };
   }
+
+  async update(id: number, description: string, status: string) {
+    const updateResult = await this._ITaskRepository.update(id, description, status);
+    if (updateResult) {
+      const result = {
+        update: {
+          description,
+          status,
+        },
+        message: 'task updated',
+      };
+      return { code: 200, result };
+    }
+    const result = { message: 'task have not been updated' };
+    return { code: 400, result };
+  }
 }
 
 export default TaskService;
