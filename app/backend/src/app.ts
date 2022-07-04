@@ -1,17 +1,27 @@
-import express from 'express';
+import * as express from 'express';
 import taskRouter from './routes/task.route';
 
 class App {
   public app: express.Application
 
   constructor() {
-    this.app = express();
+    this.app = express.default();
+    this.config();
     this.routes();
   }
 
-  middlewares() {
+  private config(): void {
+    const accessControl: express.RequestHandler = (_req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
+      res.header('Access-Control-Allow-Headers', '*');
+      next();
+    };
+
+    this.app.use(accessControl);
     this.app.use(express.json());
   }
+
 
   public start(PORT: string | number): void {
     this.app.listen(PORT);

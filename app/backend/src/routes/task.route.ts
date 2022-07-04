@@ -14,4 +14,8 @@ taskRouter.get('/', (req, res, next) => {
   taskController.findAll(req, res, next);
 });
 
+taskRouter.post('/', (req, res, next) => {
+  taskController.create(req, res, next);
+});
+
 export default taskRouter;

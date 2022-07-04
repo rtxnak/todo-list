@@ -11,8 +11,18 @@ class TaskController {
   async findAll(req: Request, res: Response, next: NextFunction) {
     try {
       const tasks = await this._ITaskService.findAll();
-
       return res.status(tasks.code as number).json(tasks.result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { body } = req;
+      console.log(req.body)
+      const taskCreated = await this._ITaskService.create(body);
+      return res.status(taskCreated.code as number).json(taskCreated.result);
     } catch (err) {
       next(err);
     }
