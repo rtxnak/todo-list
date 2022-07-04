@@ -38,6 +38,16 @@ class TaskController {
       next(err);
     }
   }
+
+  async destroy(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.body;
+      const taskDeleted = await this._ITaskService.destroy(Number(id));
+      return res.status(taskDeleted.code as number).json(taskDeleted.result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default TaskController;

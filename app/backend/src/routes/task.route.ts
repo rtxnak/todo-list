@@ -22,4 +22,8 @@ taskRouter.put('/', (req, res, next) => {
   taskController.update(req, res, next);
 });
 
+taskRouter.delete('/', (req, res, next) => {
+  taskController.destroy(req, res, next);
+});
+
 export default taskRouter;
