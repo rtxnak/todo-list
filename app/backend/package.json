@@ -4,9 +4,13 @@
   "description": "",
   "main": "./build/server",
   "scripts": {
+    "build": "npx -y tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch \"./src/**\" ./src/server.ts",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "prestart": "npm run build && npm run db:reset",
     "start": "node .",
-    "dev": "nodemon --watch \"./src/**\" ./src/server.ts"
+    "predev": "npm run build && npm run db:reset"
   },
   "keywords": [],
   "author": "",
