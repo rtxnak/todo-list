@@ -5,18 +5,26 @@
 
 This project was developed to practice the [skills](#skills) on a full stack situation.
 
+https://www.figma.com/file/EnvCv0sWpsBNOXML70cER8/My-Todo-List?node-id=0%3A1
+
+### - _Add a task, change status, delete task_
+
 in this application you can control your pending activities. To start you must add a task by writing on input bar and saving by clicking on save button,
 after that you can change the status of your task by clicking on the images on action column (![image](https://user-images.githubusercontent.com/88905400/177244846-8b18d96d-a0c6-4c9a-b884-e4e443817e0e.png) pending,![image](https://user-images.githubusercontent.com/88905400/177244916-b0d3d558-4971-4c4f-acfe-cff5da53279d.png) ongoing, ![image](https://user-images.githubusercontent.com/88905400/177244969-f6c35499-a026-4de7-8012-422d8c15850b.png)
 done) and if you prefer you can ![image](https://user-images.githubusercontent.com/88905400/177245044-a4a70f22-f87b-4cf7-bf40-bcdbdaf05617.png) delete the task.
+
+### - _Edit the description of a task_
 
 After inputed a task, you can also edit the task Description by clicking on button ![image](https://user-images.githubusercontent.com/88905400/177245345-92405fe7-b8f5-4dde-8266-b37227cb37ae.png)
  beside of task description, on clicking you have to write the new description on input and click on update button to submit 
 ![image](https://user-images.githubusercontent.com/88905400/177245662-aab83727-da55-4dca-88a8-4af0aa9d42e2.png)
 
+### - _Search a Task_
+
 To search a task, you have to write a key word on input bar and click on search button, after that it will only show tasks with description compatible with the search, and to finish the search you have to click on cancel button.
 ![image](https://user-images.githubusercontent.com/88905400/177246127-1691c9f9-bd97-4ab5-a5c9-8c57fe39964b.png)
 
-# Roadmap
+## Roadmap
  - [x] Show task list;
  - [x] Insert a new task;
  - [x] Remove a task;
