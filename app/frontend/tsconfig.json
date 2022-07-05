@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/api/requests.js"  ],
   "exclude": [
     "node_modules"
   ]
