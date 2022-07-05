@@ -3,7 +3,7 @@ import Task from "../core/Task";
 
 interface ActionProps {
   tasks: Task;
-  statusOnChange: (task: Task, status: string) => void
+  statusOnChange: (task: Task, status: string, type: string) => void
   removeOneTask?: (task: Task) => void
 }
 
@@ -12,7 +12,7 @@ export function actionOnPeding(task: Task, props: ActionProps) {
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "ongoing")}
+          onClick={() => props.statusOnChange?.(task, "ongoing", "status")}
           className={`
       text-yellow-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -20,7 +20,7 @@ export function actionOnPeding(task: Task, props: ActionProps) {
           {onGoingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "done")}
+          onClick={() => props.statusOnChange?.(task, "done", "status")}
           className={`
       text-green-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -45,7 +45,7 @@ export function actionOnOngoing(task: Task, props: ActionProps) {
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "pending")}
+          onClick={() => props.statusOnChange?.(task, "pending", "status")}
           className={`
       text-blue-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -53,7 +53,7 @@ export function actionOnOngoing(task: Task, props: ActionProps) {
           {pendingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "done")}
+          onClick={() => props.statusOnChange?.(task, "done", "status")}
           className={`
       text-green-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -78,7 +78,7 @@ export function actionOnFinished(task: Task, props: ActionProps) {
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "pending")}
+          onClick={() => props.statusOnChange?.(task, "pending", "status")}
           className={`
       text-blue-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -86,7 +86,7 @@ export function actionOnFinished(task: Task, props: ActionProps) {
           {pendingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "ongoing")}
+          onClick={() => props.statusOnChange?.(task, "ongoing", "status")}
           className={`
       text-yellow-600 rounded-full p-2 m-1
       hover:bg-purple-50

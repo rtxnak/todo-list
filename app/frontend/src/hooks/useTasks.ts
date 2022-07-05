@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Task from "../core/Task";
-import { getAll, createTask, updateTaskStatusFunc, deleteTask, sortTasks, updateTaskDescriptionFunc } from "../api/noBackEndApi";
+import { sortTasks } from "../api/noBackEndApi"
+import { getAll, createTask, updateTask, deleteTask } from "../api/requests";
 
 export default function useTasks() {
 
@@ -10,38 +11,58 @@ export default function useTasks() {
   const [editBarVisbile, setEditBarVisbile] = useState<boolean>(false);
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
 
-  useEffect(() => { getAllTasks() }, [])
-  
+  useEffect(() => { getAllTasks() }, [taskToggle])
+
   function getAllTasks() {
-    const response = getAll(tasks)
-    setTasks(response);
+    getAll()
+      .then((response) => setTasks(response))
+      .catch((error) => console.log(error));
   }
 
-  function createNewTask(newTask: string) {
-    const newTasks = createTask(tasks, newTask);
-    setTasks(newTasks);
-    setTaskToggle(!taskToggle)
+  async function createNewTask(taskDescription: string) {
+    const date = new Date().toLocaleDateString("pt-BR");
+    const newTask = {
+      description: taskDescription,
+      status: 'pending',
+      date,
+    }
+    createTask(newTask)
+      .then(() => setTaskToggle(!taskToggle))
+      .catch((error) => console.log(error));
   }
 
-  function updateTaskStatus(updateTask: Task, status: string) {
-    const id = updateTask.id
-    const newTasks = updateTaskStatusFunc(tasks, id, status)
-    setTasks(newTasks);
-    setTaskToggle(!taskToggle)
+  function updateTaskStatusAndDescription(updatedTask: Task, newInfo: string, type: string) {
+    if (type === 'description') {
+      const task = {
+        id: updatedTask.id,
+        description: newInfo,
+        date: updatedTask.date,
+        status: updatedTask.status
+      }
+      updateTask(task)
+        .then(() => setTaskToggle(!taskToggle))
+        .catch((error) => console.log(error));
+    }
+    if (type === 'status') {
+      const task = {
+        id: updatedTask.id,
+        description: updatedTask.description,
+        date: updatedTask.date,
+        status: newInfo
+      }
+      updateTask(task)
+        .then(() => setTaskToggle(!taskToggle))
+        .catch((error) => console.log(error));
+    }
   }
 
   function removeOneTask(task: Task) {
-    const id = task.id.toString()
-    const newTasks = deleteTask(tasks, id);
-    setTasks(newTasks);
-    setTaskToggle(!taskToggle)
-  }
-
-  function updateTaskDescription(updateTask: Task, description: string) {
-    const id = updateTask.id
-    const newTasks = updateTaskDescriptionFunc(tasks, id, description)
-    setTasks(newTasks)
-    setTaskToggle(!taskToggle)
+    const taskD = {
+      id: task.id.toString()
+    }
+    deleteTask(taskD)
+      .then(() => setTaskToggle(!taskToggle))
+      .catch((error) => console.log(error));
   }
 
   function sortAllTasks(tasks: Task[], type: string) {
@@ -50,23 +71,22 @@ export default function useTasks() {
     setTaskToggle(!taskToggle)
   }
 
-  function searchResultTasks(tasks: Task[]){
+  function searchResultTasks(tasks: Task[]) {
     setsearchedTasks(tasks)
   }
 
   return {
     tasks,
     createNewTask,
-    updateTaskStatus,
     removeOneTask,
     sortAllTasks,
     editBarVisbile,
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    updateTaskDescription,
     searchResultTasks,
-    searchedTasks, 
-    setsearchedTasks
+    searchedTasks,
+    setsearchedTasks,
+    updateTaskStatusAndDescription
   }
 }

@@ -4,7 +4,7 @@ import { actionOnPeding, actionOnOngoing, actionOnFinished, editAction, ascendin
 
 interface TableProps {
   tasks: Task[];
-  statusOnChange?: (task: Task, status: string) => void
+  statusOnChange?: (task: Task, status: string, type: string) => void
   removeOneTask?: (task: Task) => void
   sortAllTasks?: (task: Task[], type: string) => void
   setEditBarVisbile?: (value: boolean) => void

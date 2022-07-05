@@ -4,7 +4,7 @@ import Button from "./Button"
 import Input from "./Input"
 
 interface EditBarProps {
-  tasksOnChange?: (task: Task, uinputText: string) => void
+  tasksOnChange?: (task: Task, inputText: string, type: string) => void
   setEditBarVisbile?: (value: boolean) => void
   taskOnUpdate: Task;
 }
@@ -15,7 +15,7 @@ export default function EditBar(props: EditBarProps) {
 
   function updateButtonAction(props: EditBarProps) {
     const task = props.taskOnUpdate
-    props.tasksOnChange?.(task, inputText);
+    props.tasksOnChange?.(task, inputText,'description');
     props.setEditBarVisbile?.(false)
     setinputText('')
   }

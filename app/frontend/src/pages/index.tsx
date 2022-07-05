@@ -9,17 +9,16 @@ export default function Home() {
   const {
     tasks,
     createNewTask,
-    updateTaskStatus,
     removeOneTask,
     sortAllTasks,
     editBarVisbile,
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    updateTaskDescription,
     searchResultTasks,
     searchedTasks,
     setsearchedTasks,
+    updateTaskStatusAndDescription
   } = useTasks();
   return (
     <div className={`
@@ -36,14 +35,14 @@ export default function Home() {
             setsearchedTasks={setsearchedTasks}
           />) :
           <EditBar
-            tasksOnChange={updateTaskDescription}
+            tasksOnChange={updateTaskStatusAndDescription}
             setEditBarVisbile={setEditBarVisbile}
             taskOnUpdate={taskOnUpdate}
           />
         }
         <Table
           tasks={searchedTasks.length < 1 ? tasks : searchedTasks}
-          statusOnChange={updateTaskStatus}
+          statusOnChange={updateTaskStatusAndDescription}
           removeOneTask={removeOneTask}
           sortAllTasks={sortAllTasks}
           setEditBarVisbile={setEditBarVisbile}
