@@ -20,7 +20,6 @@ class TaskController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const { body } = req;
-      console.log(req.body)
       const taskCreated = await this._ITaskService.create(body);
       return res.status(taskCreated.code as number).json(taskCreated.result);
     } catch (err) {
