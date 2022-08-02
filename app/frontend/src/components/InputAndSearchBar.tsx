@@ -23,6 +23,7 @@ export default function InputAndSearchBar(props: InputAndSearchBarProps) {
   }
 
   function cancelSearchButtonAction() {
+    props.setinputText('')
     props.setonSearch(false)
   }
 
