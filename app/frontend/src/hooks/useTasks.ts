@@ -6,18 +6,27 @@ import { getAll, createTask, updateTask, deleteTask } from "../api/requests";
 export default function useTasks() {
 
   const [tasks, setTasks] = useState<Task[]>([])
-  const [searchedTasks, setsearchedTasks] = useState<Task[]>([])
   const [taskToggle, setTaskToggle] = useState<boolean>(false)
   const [editBarVisbile, setEditBarVisbile] = useState<boolean>(false);
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
+  const [onSearch, setonSearch] = useState<boolean>(false)
+  const [inputText, setinputText] = useState<string>('')
 
-  useEffect(() => { getAllTasks() }, [taskToggle])
-
-  function getAllTasks() {
-    getAll()
-      .then((response) => setTasks(response))
-      .catch((error) => console.log(error));
-  }
+  useEffect(() => {
+    function getAllTasks() {
+      if (!onSearch) {
+        getAll()
+          .then((response) => setTasks(response))
+          .catch((error) => console.log(error));
+      } else {
+        getAll()
+          .then((response) => response.filter((task: { description: string; }) => task.description.toLocaleLowerCase().includes(inputText)))
+          .then((result) => setTasks(result))
+          .catch((error) => console.log(error));
+      }
+    }
+    getAllTasks()
+  }, [taskToggle, onSearch, inputText])
 
   async function createNewTask(taskDescription: string) {
     const date = new Date().toLocaleDateString("pt-BR");
@@ -71,10 +80,6 @@ export default function useTasks() {
     setTaskToggle(!taskToggle)
   }
 
-  function searchResultTasks(tasks: Task[]) {
-    setsearchedTasks(tasks)
-  }
-
   return {
     tasks,
     createNewTask,
@@ -84,9 +89,10 @@ export default function useTasks() {
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    searchResultTasks,
-    searchedTasks,
-    setsearchedTasks,
-    updateTaskStatusAndDescription
+    updateTaskStatusAndDescription,
+    onSearch,
+    setonSearch,
+    inputText,
+    setinputText,
   }
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Task from "../core/Task";
 import Button from "./Button"
 import Input from "./Input"
@@ -6,50 +5,52 @@ import Input from "./Input"
 interface InputAndSearchBarProps {
   tasksOnChange?: (inputText: string) => void
   tasks?: Task[]
-  searchResultTasks?: (tasks: Task[]) => void
-  setsearchedTasks?: ([]) => void
+  setonSearch?: (boolean: boolean) => void
+  onSearch?: boolean
+  setinputText?: (text: string) => void
+  inputText?: string
 }
 
 export default function InputAndSearchBar(props: InputAndSearchBarProps) {
-
-  const [inputText, setinputText] = useState<string>('')
-  const [onSearch, setonSearch] = useState<boolean>(false)
-
   function saveButtonAction(props: InputAndSearchBarProps) {
-    props.tasksOnChange?.(inputText);
-    setinputText('')
+    props.tasksOnChange?.(props.inputText);
+    props.setinputText('')
   }
 
   function searchButtonAction(props: InputAndSearchBarProps) {
-    const searchResultTasks = props.tasks.filter(task => task.description.toLocaleLowerCase().includes(inputText))
-    setinputText('')
-    setonSearch(true)
-    props.searchResultTasks(searchResultTasks);
+    props.setinputText('')
+    props.setonSearch(true)
   }
 
-  function cancelSearchButtonAction(){
-    setonSearch(false)
-    props.setsearchedTasks([]);
+  function cancelSearchButtonAction() {
+    props.setonSearch(false)
   }
 
   return (
-    <div className="flex w-full">
-      <Input
-        value={inputText}
-        onChange={setinputText}
-      ></Input>
-      <Button
-        onClick={() => saveButtonAction(props)}
-      >Save</Button>
-      {!onSearch ? (
+    <div>
+      <div>
+        <label className="flex justify-center font-bold text-xl">
+          {props.onSearch ? ("Search Mode Activated") : ("Create Mode Activated") }
+        </label>
+      </div>
+      <div className="flex w-full">
+        <Input
+          value={props.inputText}
+          onChange={props.setinputText}
+        ></Input>
         <Button
-          onClick={() => searchButtonAction(props)}
-        >Search</Button>
-      ) : (
-        <Button
-          onClick={() => cancelSearchButtonAction()}
-        >Cancel</Button>
-      )}
+          onClick={() => saveButtonAction(props)}
+        >Save</Button>
+        {!props.onSearch ? (
+          <Button
+            onClick={() => searchButtonAction(props)}
+          >SearchON</Button>
+        ) : (
+          <Button
+            onClick={() => cancelSearchButtonAction()}
+          >SearchOFF</Button>
+        )}
+      </div>
     </div>
   )
 }

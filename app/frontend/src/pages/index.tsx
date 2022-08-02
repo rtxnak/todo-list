@@ -15,10 +15,11 @@ export default function Home() {
     setEditBarVisbile,
     taskOnUpdate,
     setTaskOnUpdate,
-    searchResultTasks,
-    searchedTasks,
-    setsearchedTasks,
-    updateTaskStatusAndDescription
+    updateTaskStatusAndDescription,
+    onSearch,
+    setonSearch,
+    inputText,
+    setinputText,
   } = useTasks();
   return (
     <div className={`
@@ -31,8 +32,10 @@ export default function Home() {
           (<InputAndSearchBarProps
             tasksOnChange={createNewTask}
             tasks={tasks}
-            searchResultTasks={searchResultTasks}
-            setsearchedTasks={setsearchedTasks}
+            setonSearch={setonSearch}
+            onSearch={onSearch}
+            inputText={inputText}
+            setinputText={setinputText}
           />) :
           <EditBar
             tasksOnChange={updateTaskStatusAndDescription}
@@ -41,7 +44,7 @@ export default function Home() {
           />
         }
         <Table
-          tasks={searchedTasks.length < 1 ? tasks : searchedTasks}
+          tasks={ tasks }
           statusOnChange={updateTaskStatusAndDescription}
           removeOneTask={removeOneTask}
           sortAllTasks={sortAllTasks}
