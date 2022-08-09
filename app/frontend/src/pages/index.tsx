@@ -10,7 +10,6 @@ export default function Home() {
     tasks,
     createNewTask,
     removeOneTask,
-    sortAllTasks,
     editBarVisbile,
     setEditBarVisbile,
     taskOnUpdate,
@@ -20,12 +19,16 @@ export default function Home() {
     setonSearch,
     inputText,
     setinputText,
+    tasksSort,
+    setTaskSort,
+    filteredTasks,
   } = useTasks();
+
   return (
     <div className={`
-      flex justify-center items-center h-screen
-      bg-gradient-to-r from-lime-100 to-purple-300
-      text-white
+    flex justify-center items-center h-screen
+    bg-gradient-to-r from-lime-100 to-purple-300
+    text-white
     `}>
       <Layout title={"TO DO LIST"}>
         {!editBarVisbile ?
@@ -44,10 +47,11 @@ export default function Home() {
           />
         }
         <Table
-          tasks={ tasks }
+          tasks={filteredTasks}
           statusOnChange={updateTaskStatusAndDescription}
           removeOneTask={removeOneTask}
-          sortAllTasks={sortAllTasks}
+          tasksSort={tasksSort}
+          setTaskSort={setTaskSort}
           setEditBarVisbile={setEditBarVisbile}
           setTaskOnUpdate={setTaskOnUpdate}
         />

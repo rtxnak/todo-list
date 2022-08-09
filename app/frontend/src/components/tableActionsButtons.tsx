@@ -3,8 +3,9 @@ import Task from "../core/Task";
 
 interface ActionProps {
   tasks: Task;
-  statusOnChange: (task: Task, status: string, type: string) => void
-  removeOneTask?: (task: Task) => void
+  statusOnChange: (task: Task, status: string, type: string) => void;
+  removeOneTask?: (task: Task) => void;
+  tasksSort?: Object;
 }
 
 export function actionOnPeding(task: Task, props: ActionProps) {
@@ -125,27 +126,17 @@ export function editAction(task: Task, props) {
   )
 }
 
-export function ascendingSort(props, type: string) {
+export function tasksSorting(props, type: string) {
+  const sortIcon = props.tasksSort.direction === "ascending" ? (ascendingIcon) : (descendingIcon)
+  const sortDirection = props.tasksSort.direction === "ascending" ? "descending" : "ascending"
   return (
     <button
-      onClick={() => props.sortAllTasks?.(props.tasks, type)}
+      onClick={() => props.setTaskSort?.({ direction: sortDirection, type })}
       className={`
       text-gray-900 rounded-full p-2 m-1
       hover:bg-purple-50
       `}>
-      {ascendingIcon}
-    </button>
-  )
-}
-
-export function descendingSort(props) {
-  return (
-    <button
-      className={`
-      text-gray-700 rounded-full p-2 m-1
-      hover:bg-purple-50
-      `}>
-      {descendingIcon}
+      {sortIcon}
     </button>
   )
 }

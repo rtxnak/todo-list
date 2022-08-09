@@ -1,14 +1,16 @@
 import Task from "../core/Task";
-import { actionOnPeding, actionOnOngoing, actionOnFinished, editAction, ascendingSort, descendingSort } from "../components/tableActionsButtons"
+import { actionOnPeding, actionOnOngoing, actionOnFinished, editAction, tasksSorting } from "../components/tableActionsButtons"
 
 
 interface TableProps {
   tasks: Task[];
-  statusOnChange?: (task: Task, status: string, type: string) => void
-  removeOneTask?: (task: Task) => void
-  sortAllTasks?: (task: Task[], type: string) => void
-  setEditBarVisbile?: (value: boolean) => void
-  setTaskOnUpdate?: (task: Task) => void
+  statusOnChange?: (task: Task, status: string, type: string) => void;
+  removeOneTask?: (task: Task) => void;
+  setEditBarVisbile?: (value: boolean) => void;
+  setTaskOnUpdate?: (task: Task) => void;
+  tasksSort?: Object;
+  setTaskSort?: (sortConfig: Object) => void;
+
 }
 
 export default function Table(props: TableProps) {
@@ -16,13 +18,13 @@ export default function Table(props: TableProps) {
     return (
       <tr>
         <th className="p-4"><div className="flex justify-left items-center">
-          Task Description{ascendingSort(props, "description")}
+          Task Description{tasksSorting(props, "description")}
         </div></th>
         <th className="p-4"><div className="flex justify-left items-center">
-          Status{ascendingSort(props, "status")}
+          Status{tasksSorting(props, "status")}
         </div></th>
         <th className="p-4"><div className="flex justify-left items-center">
-          Created Date {ascendingSort(props, "date")}
+          Created Date {tasksSorting(props, "date")}
         </div></th>
         <th className="p-4"><div className="flex justify-center items-center">
           Actions
