@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Task from "../core/Task";
-import { sortTasks } from "../api/noBackEndApi"
+// import { sortTasks } from "../api/noBackEndApi"
 import { getAll, createTask, updateTask, deleteTask } from "../api/requests";
 
 export default function useTasks() {
@@ -11,22 +11,40 @@ export default function useTasks() {
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
   const [onSearch, setonSearch] = useState<boolean>(false)
   const [inputText, setinputText] = useState<string>('')
+  const [tasksSort, setTaskSort] = useState<any>({
+    direction: "ascending",
+    type: "date",
+  })
 
   useEffect(() => {
+    const { type, direction } = tasksSort;
+
+    function sortAllTasks(tasks: Task[], type: string) {
+      if (direction === "descending") {
+        return sortTasksAscending(tasks, type);
+      } else if (direction === "ascending") {
+        return sortTasksDescending(tasks, type);
+      }
+    }
+
     function getAllTasks() {
       if (!onSearch) {
         getAll()
-          .then((response) => setTasks(response))
+          .then((response) => sortAllTasks(response, type))
+          .then((result) => setTasks(result))
           .catch((error) => console.log(error));
       } else {
         getAll()
           .then((response) => response.filter((task: { description: string; }) => task.description.toLocaleLowerCase().includes(inputText)))
+          .then((response) => sortAllTasks(response, type))
           .then((result) => setTasks(result))
           .catch((error) => console.log(error));
       }
     }
+    console.log(tasksSort)
     getAllTasks()
-  }, [taskToggle, onSearch, inputText])
+  }, [taskToggle, onSearch, inputText, tasksSort])
+
 
   async function createNewTask(taskDescription: string) {
     const date = new Date().toLocaleDateString("pt-BR");
@@ -74,17 +92,40 @@ export default function useTasks() {
       .catch((error) => console.log(error));
   }
 
-  function sortAllTasks(tasks: Task[], type: string) {
-    const newTasks = sortTasks(tasks, type);
-    setTasks(newTasks)
-    setTaskToggle(!taskToggle)
-  }
+  function sortTasksAscending(tasks: Task[], type: string) {
+    if (type === "description") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => a.description.localeCompare(b.description))
+      return sortedTasks
+    }
+    if (type === "status") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => a.status.localeCompare(b.status))
+      return sortedTasks
+    }
+    if (type === "date") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => a.date.localeCompare(b.date))
+      return sortedTasks
+    }
+  };
+
+  function sortTasksDescending(tasks: Task[], type: string) {
+    if (type === "description") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => b.description.localeCompare(a.description))
+      return sortedTasks
+    }
+    if (type === "status") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => b.status.localeCompare(a.status))
+      return sortedTasks
+    }
+    if (type === "date") {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => b.date.localeCompare(a.date))
+      return sortedTasks
+    }
+  };
 
   return {
     tasks,
     createNewTask,
     removeOneTask,
-    sortAllTasks,
     editBarVisbile,
     setEditBarVisbile,
     taskOnUpdate,
@@ -94,5 +135,7 @@ export default function useTasks() {
     setonSearch,
     inputText,
     setinputText,
+    tasksSort,
+    setTaskSort,
   }
 }

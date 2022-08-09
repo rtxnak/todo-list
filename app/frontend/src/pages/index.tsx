@@ -10,7 +10,6 @@ export default function Home() {
     tasks,
     createNewTask,
     removeOneTask,
-    sortAllTasks,
     editBarVisbile,
     setEditBarVisbile,
     taskOnUpdate,
@@ -20,6 +19,8 @@ export default function Home() {
     setonSearch,
     inputText,
     setinputText,
+    tasksSort,
+    setTaskSort,
   } = useTasks();
   return (
     <div className={`
@@ -44,10 +45,11 @@ export default function Home() {
           />
         }
         <Table
-          tasks={ tasks }
+          tasks={tasks}
           statusOnChange={updateTaskStatusAndDescription}
           removeOneTask={removeOneTask}
-          sortAllTasks={sortAllTasks}
+          tasksSort={tasksSort}
+          setTaskSort={setTaskSort}
           setEditBarVisbile={setEditBarVisbile}
           setTaskOnUpdate={setTaskOnUpdate}
         />
