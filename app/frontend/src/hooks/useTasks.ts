@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Task from "../core/Task";
-// import { sortTasks } from "../api/noBackEndApi"
 import { getAll, createTask, updateTask, deleteTask } from "../api/requests";
 
 export default function useTasks() {
@@ -28,23 +27,15 @@ export default function useTasks() {
     }
 
     function getAllTasks() {
-      if (!onSearch) {
-        getAll()
-          .then((response) => sortAllTasks(response, type))
-          .then((result) => setTasks(result))
-          .catch((error) => console.log(error));
-      } else {
-        getAll()
-          .then((response) => response.filter((task: { description: string; }) => task.description.toLocaleLowerCase().includes(inputText)))
-          .then((response) => sortAllTasks(response, type))
-          .then((result) => setTasks(result))
-          .catch((error) => console.log(error));
-      }
+      getAll()
+        .then((response) => sortAllTasks(response, type))
+        .then((result) => setTasks(result))
+        .catch((error) => console.log(error));
     }
-    console.log(tasksSort)
     getAllTasks()
-  }, [taskToggle, onSearch, inputText, tasksSort])
+  }, [taskToggle, tasksSort])
 
+  const filteredTasks = onSearch ? tasks.filter((task: { description: string; }) => task.description.toLocaleLowerCase().includes(inputText.toLocaleLowerCase())) : tasks
 
   async function createNewTask(taskDescription: string) {
     const date = new Date().toLocaleDateString("pt-BR");
@@ -137,5 +128,6 @@ export default function useTasks() {
     setinputText,
     tasksSort,
     setTaskSort,
+    filteredTasks,
   }
 }
