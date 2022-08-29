@@ -11,7 +11,7 @@ interface EditBarProps {
 
 export default function EditBar(props: EditBarProps) {
 
-  const [inputText, setinputText] = useState('')
+  const [inputText, setinputText] = useState(props.taskOnUpdate.description)
 
   function updateButtonAction(props: EditBarProps) {
     const task = props.taskOnUpdate
