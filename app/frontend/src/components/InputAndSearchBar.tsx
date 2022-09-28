@@ -1,36 +1,31 @@
-import Task from "../core/Task";
+import { useContext } from 'react';
+import { TaskContext } from '../hooks/taskContext';
 import Button from "./Button"
 import Input from "./Input"
 
-interface InputAndSearchBarProps {
-  tasksOnChange?: (inputText: string) => void
-  tasks?: Task[]
-  setonSearch?: (boolean: boolean) => void
-  onSearch?: boolean
-  setinputText?: (text: string) => void
-  inputText?: string
-}
+export default function InputAndSearchBar() {
 
-export default function InputAndSearchBar(props: InputAndSearchBarProps) {
-  function saveButtonAction(props: InputAndSearchBarProps) {
-    props.tasksOnChange?.(props.inputText);
-    props.setinputText('')
+  const { createNewTask, setonSearch, onSearch, inputText, setinputText } = useContext(TaskContext)
+
+  function saveButtonAction() {
+    createNewTask?.(inputText);
+    setinputText('')
   }
 
-  function searchButtonAction(props: InputAndSearchBarProps) {
-    props.setinputText('')
-    props.setonSearch(true)
+  function searchButtonAction() {
+    setinputText('')
+    setonSearch(true)
   }
 
   function cancelSearchButtonAction() {
-    props.setinputText('')
-    props.setonSearch(false)
+    setinputText('')
+    setonSearch(false)
   }
 
   return (
     <div>
       <div>
-        {props.onSearch ? (
+        {onSearch ? (
           <label className="flex justify-center font-bold text-xl bg-purple-200 py-2 mx-2">
             {"Search Mode Activated"}
           </label>) : (
@@ -41,15 +36,15 @@ export default function InputAndSearchBar(props: InputAndSearchBarProps) {
       </div>
       <div className="flex w-full">
         <Input
-          value={props.inputText}
-          onChange={props.setinputText}
+          value={inputText}
+          onChange={setinputText}
         ></Input>
         <Button
-          onClick={() => saveButtonAction(props)}
+          onClick={() => saveButtonAction()}
         >Save</Button>
-        {!props.onSearch ? (
+        {!onSearch ? (
           <Button
-            onClick={() => searchButtonAction(props)}
+            onClick={() => searchButtonAction()}
           >SearchON</Button>
         ) : (
           <Button

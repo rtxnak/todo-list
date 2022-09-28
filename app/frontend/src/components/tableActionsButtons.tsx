@@ -1,19 +1,17 @@
+import { useContext } from "react";
 import { pendingIcon, onGoingIcon, FinishedIcon, trashIcon, editIcon, ascendingIcon, descendingIcon } from "../components/Icons"
 import Task from "../core/Task";
+import { TaskContext } from "../hooks/taskContext";
 
-interface ActionProps {
-  tasks: Task;
-  statusOnChange: (task: Task, status: string, type: string) => void;
-  removeOneTask?: (task: Task) => void;
-  tasksSort?: Object;
-}
+export function ActionOnPeding(task: Task) {
 
-export function actionOnPeding(task: Task, props: ActionProps) {
+  const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
+
   return (
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "ongoing", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "ongoing", "status")}
           className={`
       text-yellow-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -21,7 +19,7 @@ export function actionOnPeding(task: Task, props: ActionProps) {
           {onGoingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "done", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "done", "status")}
           className={`
       text-green-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -29,7 +27,7 @@ export function actionOnPeding(task: Task, props: ActionProps) {
           {FinishedIcon}
         </button>
         <button
-          onClick={() => props.removeOneTask?.(task)}
+          onClick={() => removeOneTask(task)}
           className={`
       text-red-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -41,12 +39,15 @@ export function actionOnPeding(task: Task, props: ActionProps) {
   )
 }
 
-export function actionOnOngoing(task: Task, props: ActionProps) {
+export function ActionOnOngoing(task: Task) {
+
+  const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
+
   return (
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "pending", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
           className={`
       text-blue-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -54,7 +55,7 @@ export function actionOnOngoing(task: Task, props: ActionProps) {
           {pendingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "done", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "done", "status")}
           className={`
       text-green-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -62,7 +63,7 @@ export function actionOnOngoing(task: Task, props: ActionProps) {
           {FinishedIcon}
         </button>
         <button
-          onClick={() => props.removeOneTask?.(task)}
+          onClick={() => removeOneTask(task)}
           className={`
       text-red-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -74,12 +75,15 @@ export function actionOnOngoing(task: Task, props: ActionProps) {
   )
 }
 
-export function actionOnFinished(task: Task, props: ActionProps) {
+export function ActionOnFinished(task: Task) {
+
+  const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
+
   return (
     <td>
       <div className="flex justify-center">
         <button
-          onClick={() => props.statusOnChange?.(task, "pending", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
           className={`
       text-blue-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -87,7 +91,7 @@ export function actionOnFinished(task: Task, props: ActionProps) {
           {pendingIcon}
         </button>
         <button
-          onClick={() => props.statusOnChange?.(task, "ongoing", "status")}
+          onClick={() => updateTaskStatusAndDescription(task, "ongoing", "status")}
           className={`
       text-yellow-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -95,7 +99,7 @@ export function actionOnFinished(task: Task, props: ActionProps) {
           {onGoingIcon}
         </button>
         <button
-          onClick={() => props.removeOneTask?.(task)}
+          onClick={() => removeOneTask(task)}
           className={`
       text-red-600 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -107,16 +111,13 @@ export function actionOnFinished(task: Task, props: ActionProps) {
   )
 }
 
-function editDescription(task: Task, props) {
-  props.setEditBarVisbile?.(true)
-  props.setTaskOnUpdate?.(task)
-}
+export function EditAction(task: Task) {
 
+  const { setEditBarVisbile, setTaskOnUpdate } = useContext(TaskContext);
 
-export function editAction(task: Task, props) {
   return (
     <button
-      onClick={() => editDescription(task, props)}
+      onClick={function(){ setEditBarVisbile(true); setTaskOnUpdate(task)}}
       className={`
       text-gray-500 rounded-full p-2 m-1
       hover:bg-purple-50
@@ -126,12 +127,15 @@ export function editAction(task: Task, props) {
   )
 }
 
-export function tasksSorting(props, type: string) {
-  const sortIcon = props.tasksSort.direction === "ascending" ? (ascendingIcon) : (descendingIcon)
-  const sortDirection = props.tasksSort.direction === "ascending" ? "descending" : "ascending"
+export function TasksSorting(type: string) {
+
+  const { tasksSort, setTaskSort } = useContext(TaskContext)
+
+  const sortIcon = tasksSort.direction === "ascending" ? (ascendingIcon) : (descendingIcon)
+  const sortDirection = tasksSort.direction === "ascending" ? "descending" : "ascending"
   return (
     <button
-      onClick={() => props.setTaskSort?.({ direction: sortDirection, type })}
+      onClick={() => setTaskSort({ direction: sortDirection, type })}
       className={`
       text-gray-900 rounded-full p-2 m-1
       hover:bg-purple-50

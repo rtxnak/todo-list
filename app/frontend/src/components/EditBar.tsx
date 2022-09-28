@@ -1,22 +1,18 @@
-import { useState } from "react";
-import Task from "../core/Task";
+import { useState, useContext } from "react";
+import { TaskContext } from '../hooks/taskContext';
 import Button from "./Button"
 import Input from "./Input"
 
-interface EditBarProps {
-  tasksOnChange?: (task: Task, inputText: string, type: string) => void
-  setEditBarVisbile?: (value: boolean) => void
-  taskOnUpdate: Task;
-}
+export default function EditBar() {
 
-export default function EditBar(props: EditBarProps) {
+  const { updateTaskStatusAndDescription, setEditBarVisbile, taskOnUpdate } = useContext(TaskContext)
 
-  const [inputText, setinputText] = useState(props.taskOnUpdate.description)
+  const [inputText, setinputText] = useState(taskOnUpdate.description)
 
-  function updateButtonAction(props: EditBarProps) {
-    const task = props.taskOnUpdate
-    props.tasksOnChange?.(task, inputText,'description');
-    props.setEditBarVisbile?.(false)
+  function updateButtonAction() {
+    const task = taskOnUpdate
+    updateTaskStatusAndDescription(task, inputText, 'description');
+    setEditBarVisbile(false)
     setinputText('')
   }
 
@@ -24,7 +20,7 @@ export default function EditBar(props: EditBarProps) {
     <div >
       <div>
         <label className="flex justify-center font-bold text-xl bg-amber-200 py-2 mx-2">
-          {`Edit mode Activated - Task: ${props.taskOnUpdate.description}`}
+          {`Edit mode Activated - Task: ${taskOnUpdate.description}`}
         </label>
       </div>
       <div className="flex w-full">
@@ -33,7 +29,7 @@ export default function EditBar(props: EditBarProps) {
           onChange={setinputText}
         ></Input>
         <Button
-          onClick={() => updateButtonAction(props)}
+          onClick={() => updateButtonAction()}
         >Update</Button>
       </div>
     </div>

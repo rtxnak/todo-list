@@ -1,8 +1,39 @@
-import { useEffect, useState } from "react"
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import Task from "../core/Task";
 import { getAll, createTask, updateTask, deleteTask } from "../api/requests";
+import InputAndSearchBar from "../components/InputAndSearchBar"
+import EditBar from "../components/EditBar"
 
-export default function useTasks() {
+type taskSortType = {
+  direction: string,
+  type: string,
+}
+
+type TaskContextProps = {
+  children: ReactNode;
+}
+
+type TaskContextType = {
+  tasks: Task[],
+  createNewTask: (taskDescription: string) => void,
+  removeOneTask: (task: Task) => void,
+  editBarVisbile: boolean,
+  setEditBarVisbile: (newState: boolean) => void,
+  taskOnUpdate: Task,
+  setTaskOnUpdate: (newState: Task) => void,
+  updateTaskStatusAndDescription: (updatedTask: Task, newInfo: string, type: string) => void,
+  onSearch: boolean,
+  setonSearch: (newState: boolean) => void,
+  inputText: string,
+  setinputText: (newState: string) => void,
+  tasksSort: taskSortType,
+  setTaskSort: (newState: taskSortType) => void,
+  filteredTasks: Task[],
+}
+
+export const TaskContext = createContext<TaskContextType>({} as TaskContextType);
+
+export const TaskContextProvider = ({ children }: TaskContextProps) => {
 
   const [tasks, setTasks] = useState<Task[]>([])
   const [taskToggle, setTaskToggle] = useState<boolean>(false)
@@ -10,7 +41,7 @@ export default function useTasks() {
   const [taskOnUpdate, setTaskOnUpdate] = useState<Task>(null)
   const [onSearch, setonSearch] = useState<boolean>(false)
   const [inputText, setinputText] = useState<string>('')
-  const [tasksSort, setTaskSort] = useState<any>({
+  const [tasksSort, setTaskSort] = useState<taskSortType>({
     direction: "ascending",
     type: "date",
   })
@@ -37,7 +68,7 @@ export default function useTasks() {
 
   const filteredTasks = onSearch ? tasks.filter((task: { description: string; }) => task.description.toLocaleLowerCase().includes(inputText.toLocaleLowerCase())) : tasks
 
-  async function createNewTask(taskDescription: string) {
+  function createNewTask(taskDescription: string) {
     const date = new Date().toLocaleDateString("pt-BR");
     const newTask = {
       description: taskDescription,
@@ -113,21 +144,32 @@ export default function useTasks() {
     }
   };
 
-  return {
-    tasks,
-    createNewTask,
-    removeOneTask,
-    editBarVisbile,
-    setEditBarVisbile,
-    taskOnUpdate,
-    setTaskOnUpdate,
-    updateTaskStatusAndDescription,
-    onSearch,
-    setonSearch,
-    inputText,
-    setinputText,
-    tasksSort,
-    setTaskSort,
-    filteredTasks,
-  }
+  return (
+    <TaskContext.Provider
+      value={{
+        tasks,
+        createNewTask,
+        removeOneTask,
+        editBarVisbile,
+        setEditBarVisbile,
+        taskOnUpdate,
+        setTaskOnUpdate,
+        updateTaskStatusAndDescription,
+        onSearch,
+        setonSearch,
+        inputText,
+        setinputText,
+        tasksSort,
+        setTaskSort,
+        filteredTasks,
+      }}
+    >
+      {
+        !editBarVisbile ?
+          (<InputAndSearchBar />) :
+          (<EditBar />)
+      }
+      {children}
+    </TaskContext.Provider>
+  )
 }
