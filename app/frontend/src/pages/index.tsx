@@ -1,29 +1,8 @@
 import Layout from "../components/Layout"
-import InputAndSearchBarProps from "../components/InputAndSearchBar"
-import EditBar from "../components/EditBar"
 import Table from "../components/Table"
-import useTasks from "../hooks/useTasks"
+import { TaskContextProvider } from "../hooks/taskContext"
 
 export default function Home() {
-
-  const {
-    tasks,
-    createNewTask,
-    removeOneTask,
-    editBarVisbile,
-    setEditBarVisbile,
-    taskOnUpdate,
-    setTaskOnUpdate,
-    updateTaskStatusAndDescription,
-    onSearch,
-    setonSearch,
-    inputText,
-    setinputText,
-    tasksSort,
-    setTaskSort,
-    filteredTasks,
-  } = useTasks();
-
   return (
     <div className={`
     flex justify-center items-center h-screen
@@ -31,30 +10,9 @@ export default function Home() {
     text-white
     `}>
       <Layout title={"TO DO LIST"}>
-        {!editBarVisbile ?
-          (<InputAndSearchBarProps
-            tasksOnChange={createNewTask}
-            tasks={tasks}
-            setonSearch={setonSearch}
-            onSearch={onSearch}
-            inputText={inputText}
-            setinputText={setinputText}
-          />) :
-          <EditBar
-            tasksOnChange={updateTaskStatusAndDescription}
-            setEditBarVisbile={setEditBarVisbile}
-            taskOnUpdate={taskOnUpdate}
-          />
-        }
-        <Table
-          tasks={filteredTasks}
-          statusOnChange={updateTaskStatusAndDescription}
-          removeOneTask={removeOneTask}
-          tasksSort={tasksSort}
-          setTaskSort={setTaskSort}
-          setEditBarVisbile={setEditBarVisbile}
-          setTaskOnUpdate={setTaskOnUpdate}
-        />
+        <TaskContextProvider>
+          <Table />
+        </TaskContextProvider>
       </Layout>
     </div>
   )

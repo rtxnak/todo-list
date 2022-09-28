@@ -1,30 +1,23 @@
+import { useContext } from "react";
+import { TaskContext } from "../hooks/taskContext";
 import Task from "../core/Task";
-import { actionOnPeding, actionOnOngoing, actionOnFinished, editAction, tasksSorting } from "../components/tableActionsButtons"
+import { ActionOnPeding, ActionOnOngoing, ActionOnFinished, EditAction, TasksSorting } from "../components/tableActionsButtons"
 
+export default function Table() {
 
-interface TableProps {
-  tasks: Task[];
-  statusOnChange?: (task: Task, status: string, type: string) => void;
-  removeOneTask?: (task: Task) => void;
-  setEditBarVisbile?: (value: boolean) => void;
-  setTaskOnUpdate?: (task: Task) => void;
-  tasksSort?: Object;
-  setTaskSort?: (sortConfig: Object) => void;
+  const { filteredTasks } = useContext(TaskContext)
 
-}
-
-export default function Table(props: TableProps) {
   function tableHeader() {
     return (
       <tr>
         <th className="p-4"><div className="flex justify-left items-center">
-          Task Description{tasksSorting(props, "description")}
+          Task Description{TasksSorting("description")}
         </div></th>
         <th className="p-4"><div className="flex justify-left items-center">
-          Status{tasksSorting(props, "status")}
+          Status{TasksSorting("status")}
         </div></th>
         <th className="p-4"><div className="flex justify-left items-center">
-          Created Date {tasksSorting(props, "date")}
+          Created Date {TasksSorting("date")}
         </div></th>
         <th className="p-4"><div className="flex justify-center items-center">
           Actions
@@ -33,16 +26,16 @@ export default function Table(props: TableProps) {
     )
   }
 
-  function tableActions(task: Task, props) {
+  function tableActions(task: Task) {
     return (
-      task.status === "pending" ? actionOnPeding(task, props) : false ||
-        task.status === "ongoing" ? actionOnOngoing(task, props) : false ||
-          task.status === "done" ? actionOnFinished(task, props) : false
+      task.status === "pending" ? ActionOnPeding(task) : false ||
+        task.status === "ongoing" ? ActionOnOngoing(task) : false ||
+          task.status === "done" ? ActionOnFinished(task) : false
     )
   }
 
   function tableBody() {
-    return props.tasks?.map((task, i) => {
+    return filteredTasks.map((task, i) => {
       return (
         <tr key={task.id}
           className={`${i % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}
@@ -50,12 +43,12 @@ export default function Table(props: TableProps) {
           <td>
             <div className="flex p-4 text-left items-center">
               {task.description}
-              {editAction(task, props)}
+              {EditAction(task)}
             </div>
           </td>
           <td className="text-left p-4 items-center">{task.status}</td>
           <td className="text-left p-4 items-center">{task.date}</td>
-          {tableActions(task, props)}
+          {tableActions(task)}
         </tr>
       )
     })
