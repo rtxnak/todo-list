@@ -26,10 +26,10 @@ export default function InputAndSearchBar() {
     <div>
       <div>
         {onSearch ? (
-          <label className="flex justify-center font-bold text-xl bg-purple-200 py-2 mx-2">
+          <label className="flex justify-center font-bold text-xl bg-purple-200 md:py-2 md:mx-2">
             {"Search Mode Activated"}
           </label>) : (
-          <label className="flex justify-center font-bold text-xl bg-lime-200 py-2 mx-2">
+          <label className="flex justify-center font-bold text-xl bg-lime-200 md:py-2 md:mx-2">
             {"Create Mode Activated"}
           </label>
         )}

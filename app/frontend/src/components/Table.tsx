@@ -10,16 +10,16 @@ export default function Table() {
   function tableHeader() {
     return (
       <tr>
-        <th className="p-4"><div className="flex justify-left items-center">
+        <th className="p-1 md:p-4"><div className="flex justify-left items-center">
           Task Description{TasksSorting("description")}
         </div></th>
-        <th className="p-4"><div className="flex justify-left items-center">
+        <th className="p- md:p-4"><div className="flex justify-left items-center">
           Status{TasksSorting("status")}
         </div></th>
-        <th className="p-4"><div className="flex justify-left items-center">
+        <th className="p-1 md:p-4"><div className="flex justify-left items-center">
           Created Date {TasksSorting("date")}
         </div></th>
-        <th className="p-4"><div className="flex justify-center items-center">
+        <th className="p-1 md:p-4"><div className="flex justify-center items-center">
           Actions
         </div></th>
       </tr>
@@ -41,13 +41,13 @@ export default function Table() {
           className={`${i % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}
         >
           <td>
-            <div className="flex p-4 text-left items-center">
+            <div className="flex p-2 m-1md:p-4 text-left items-center">
               {task.description}
               {EditAction(task)}
             </div>
           </td>
-          <td className="text-left p-4 items-center">{task.status}</td>
-          <td className="text-left p-4 items-center">{task.date}</td>
+          <td className="text-left p-2 md:p-4 items-center">{task.status}</td>
+          <td className="text-left p-2 md:p-4 items-center">{task.date}</td>
           {tableActions(task)}
         </tr>
       )
@@ -55,7 +55,7 @@ export default function Table() {
   }
 
   return (
-    <table className="w-full rounded-xl overflow-hidden">
+    <table className="w-full rounded-md md:rounded-xl overflow-hidden">
       <thead className={`
         text-gray-100
         bg-gradient-to-r from-lime-600 to-purple-800

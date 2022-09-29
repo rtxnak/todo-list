@@ -8,11 +8,12 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   return (
     <div className={`
-      flex flex-col w-90%
-      bg-white text-gray-800 rounded-md
+      flex flex-col overflow-auto max-h-screen
+      text-xs md:text-base w-screen
+      bg-white text-gray-800
     `}>
       <Title>{props.title}</Title>
-      <div className="p-6">
+      <div className="m-1 md:p-6">
         {props.children}
       </div>
     </div>

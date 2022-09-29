@@ -13,7 +13,7 @@ export function ActionOnPeding(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "ongoing", "status")}
           className={`
-      text-yellow-600 rounded-full p-2 m-1
+      text-yellow-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {onGoingIcon}
@@ -21,7 +21,7 @@ export function ActionOnPeding(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "done", "status")}
           className={`
-      text-green-600 rounded-full p-2 m-1
+      text-green-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {FinishedIcon}
@@ -29,7 +29,7 @@ export function ActionOnPeding(task: Task) {
         <button
           onClick={() => removeOneTask(task)}
           className={`
-      text-red-600 rounded-full p-2 m-1
+      text-red-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {trashIcon}
@@ -49,7 +49,7 @@ export function ActionOnOngoing(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
           className={`
-      text-blue-600 rounded-full p-2 m-1
+      text-blue-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {pendingIcon}
@@ -57,7 +57,7 @@ export function ActionOnOngoing(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "done", "status")}
           className={`
-      text-green-600 rounded-full p-2 m-1
+      text-green-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {FinishedIcon}
@@ -65,7 +65,7 @@ export function ActionOnOngoing(task: Task) {
         <button
           onClick={() => removeOneTask(task)}
           className={`
-      text-red-600 rounded-full p-2 m-1
+      text-red-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {trashIcon}
@@ -85,7 +85,7 @@ export function ActionOnFinished(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
           className={`
-      text-blue-600 rounded-full p-2 m-1
+      text-blue-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {pendingIcon}
@@ -93,7 +93,7 @@ export function ActionOnFinished(task: Task) {
         <button
           onClick={() => updateTaskStatusAndDescription(task, "ongoing", "status")}
           className={`
-      text-yellow-600 rounded-full p-2 m-1
+      text-yellow-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {onGoingIcon}
@@ -101,7 +101,7 @@ export function ActionOnFinished(task: Task) {
         <button
           onClick={() => removeOneTask(task)}
           className={`
-      text-red-600 rounded-full p-2 m-1
+      text-red-600 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
           {trashIcon}
@@ -119,7 +119,7 @@ export function EditAction(task: Task) {
     <button
       onClick={function(){ setEditBarVisbile(true); setTaskOnUpdate(task)}}
       className={`
-      text-gray-500 rounded-full p-2 m-1
+      text-gray-500 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
       {editIcon}
@@ -137,7 +137,7 @@ export function TasksSorting(type: string) {
     <button
       onClick={() => setTaskSort({ direction: sortDirection, type })}
       className={`
-      text-gray-900 rounded-full p-2 m-1
+      text-gray-900 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
       `}>
       {sortIcon}
