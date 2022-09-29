@@ -19,7 +19,7 @@ export default function EditBar() {
   return (
     <div >
       <div>
-        <label className="flex justify-center font-bold text-xl bg-amber-200 py-2 mx-2">
+        <label className="flex justify-center font-bold text-md md:text-xl bg-amber-200 py-2 md:mx-2">
           {`Edit mode Activated - Task: ${taskOnUpdate.description}`}
         </label>
       </div>
