@@ -110,5 +110,47 @@ describe('todo list API test', () => {
       expect(chaiHttpResponse.body.message).to.be.equal('task have not been updated');
     });
   });
+
+  describe('DELETE on path "/", SUCCESS deleting one task and return correct status code', () => {
+    before(async () => {
+      sinon.stub(Task, 'destroy').resolves(1)
+      chaiHttpResponse = await request(app).delete('/')
+        .send({
+          id: 1,
+        })
+    });
+
+    after(async () => {
+      (Task.destroy as sinon.SinonStub).restore();
+    })
+
+    it('return status code "200"', () => {
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+    it('return the message "task updated"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('task deleted');
+    });
+  });
+
+  describe('DELETE on path "/", FALIRE deleting one task and return correct status code', () => {
+    before(async () => {
+      sinon.stub(Task, 'destroy').resolves(0)
+      chaiHttpResponse = await request(app).delete('/')
+        .send({
+          id: 1,
+        })
+    });
+
+    after(async () => {
+      (Task.destroy as sinon.SinonStub).restore();
+    })
+
+    it('return status code "200"', () => {
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+    it('return the message "task updated"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('task have not been deleted');
+    });
+  });
 });
 
