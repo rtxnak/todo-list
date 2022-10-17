@@ -5,9 +5,9 @@
   "main": "./build/server",
   "scripts": {
     "build": "npx -y tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch \"./src/**\" ./src/server.ts",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "test": "mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build && npm run db:reset",
     "start": "node .",
     "predev": "npm run build && npm run db:reset"
@@ -16,11 +16,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/chai-http": "^4.2.0",
     "@types/express": "4.17.13",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^18.0.1",
     "@types/sequelize": "^4.28.13",
-    "nodemon": "2.0.15",
+    "@types/sinon": "^10.0.13",
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20",
     "sequelize-cli": "^6.4.1",
+    "sinon": "^14.0.1",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   },
