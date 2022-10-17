@@ -31,4 +31,28 @@ describe('todo list API test', () => {
       expect(chaiHttpResponse.body).to.be.deep.eq(taskModelMock);
     });
   });
+
+  describe('POST on path "/", SUCCESS creating new task and correct status code', () => {
+    before(async () => {
+      chaiHttpResponse = await request(app).post('/')
+        .send({
+          description: "fifth task",
+          status: "ongoing",
+          date: "17/10/2022",
+        });
+    });
+
+    it('return status code "201"', () => {
+      expect(chaiHttpResponse).to.have.status(201);
+    });
+    it('return the new task with id', () => {
+      expect(chaiHttpResponse.body).to.have.property('id');
+    });
+    it('return the new task with correct description, date and pending status', () => {
+      expect(chaiHttpResponse.body.description).to.be.equal('fifth task');
+      expect(chaiHttpResponse.body.status).to.be.equal('pending');
+      expect(chaiHttpResponse.body.date).to.be.equal('17/10/2022');
+    });
+  });
 });
+
