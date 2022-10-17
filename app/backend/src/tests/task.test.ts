@@ -60,5 +60,55 @@ describe('todo list API test', () => {
       expect(chaiHttpResponse.body.date).to.be.equal('17/10/2022');
     });
   });
+
+  describe('PUT on path "/", SUCCESS updating the description and status of a task and return correct status code', () => {
+    before(async () => {
+      sinon.stub(Task, 'update').resolves([1])
+      chaiHttpResponse = await request(app).put('/')
+        .send({
+          id: 1,
+          description: "NEW task",
+          status: "done",
+        })
+    });
+
+    after(async () => {
+      (Task.update as sinon.SinonStub).restore();
+    })
+
+    it('return status code "200"', () => {
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+    it('return the updated task with correct description and status', () => {
+      expect(chaiHttpResponse.body.update.description).to.be.equal('NEW task');
+      expect(chaiHttpResponse.body.update.status).to.be.equal('done');
+    });
+    it('return the message "task updated"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('task updated');
+    });
+  });
+
+  describe('PUT on path "/", FAILURE updating a task and return correct status code', () => {
+    before(async () => {
+      sinon.stub(Task, 'update').resolves([0])
+      chaiHttpResponse = await request(app).put('/')
+        .send({
+          id: 1,
+          description: "NEW task",
+          status: "done",
+        })
+    });
+
+    after(async () => {
+      (Task.update as sinon.SinonStub).restore();
+    })
+
+    it('return status code "400"', () => {
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+    it('return the message "task have not been updated"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('task have not been updated');
+    });
+  });
 });
 
