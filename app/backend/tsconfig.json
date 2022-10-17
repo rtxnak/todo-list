@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6",
+    "target": "ES6",
     "rootDir": "./src",
     "outDir": "./build",
     "esModuleInterop": true,
     "strict": true,
-    "strictPropertyInitialization": false
-  }
+    "strictPropertyInitialization": false,
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/tests"
+  ]
 }
