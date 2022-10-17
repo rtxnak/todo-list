@@ -5,9 +5,9 @@
   "main": "./build/server",
   "scripts": {
     "build": "npx -y tsc",
-    "test": "mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
     "dev": "nodemon --watch \"./src/**\" ./src/server.ts",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "test": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build && npm run db:reset",
     "start": "node .",
     "predev": "npm run build && npm run db:reset"
