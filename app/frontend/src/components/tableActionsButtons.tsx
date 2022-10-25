@@ -8,7 +8,9 @@ export function ActionOnPeding(task: Task) {
   const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
 
   return (
-    <td>
+    <td
+      data-testid={`status-pending-buttons-on-task-${task.id}`}
+    >
       <div className="flex justify-center">
         <button
           onClick={() => updateTaskStatusAndDescription(task, "ongoing", "status")}
@@ -44,7 +46,9 @@ export function ActionOnOngoing(task: Task) {
   const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
 
   return (
-    <td>
+    <td
+      data-testid={`status-onGoing-buttons-on-task-${task.id}`}
+    >
       <div className="flex justify-center">
         <button
           onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
@@ -80,7 +84,9 @@ export function ActionOnFinished(task: Task) {
   const { updateTaskStatusAndDescription, removeOneTask, } = useContext(TaskContext)
 
   return (
-    <td>
+    <td
+      data-testid={`status-done-buttons-on-task-${task.id}`}
+    >
       <div className="flex justify-center">
         <button
           onClick={() => updateTaskStatusAndDescription(task, "pending", "status")}
@@ -117,7 +123,8 @@ export function EditAction(task: Task) {
 
   return (
     <button
-      onClick={function(){ setEditBarVisbile(true); setTaskOnUpdate(task)}}
+      data-testid="edit-button"
+      onClick={function () { setEditBarVisbile(true); setTaskOnUpdate(task) }}
       className={`
       text-gray-500 rounded-full md:p-2 md:m-1
       hover:bg-purple-50
@@ -135,6 +142,7 @@ export function TasksSorting(type: string) {
   const sortDirection = tasksSort.direction === "ascending" ? "descending" : "ascending"
   return (
     <button
+      data-testid="sort-button"
       onClick={() => setTaskSort({ direction: sortDirection, type })}
       className={`
       text-gray-900 rounded-full md:p-2 md:m-1

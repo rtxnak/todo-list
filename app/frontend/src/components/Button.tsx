@@ -5,7 +5,10 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
   return (
-    <div className="flex pl-1 first:py-1 md:p-2">
+    <div
+      className="flex pl-1 first:py-1 md:p-2"
+      data-testid="button"
+    >
       <button
         onClick={props.onClick}
         className={`

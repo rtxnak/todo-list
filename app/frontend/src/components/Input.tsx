@@ -6,7 +6,10 @@ interface InputProps {
 
 export default function Input(props: InputProps) {
   return (
-    <div className="flex py-1 md:p-2 w-full">
+    <div
+      className="flex py-1 md:p-2 w-full"
+      data-testid="input"
+    >
       <input
         type='text'
         value={props.value}
