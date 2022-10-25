@@ -39,15 +39,28 @@ export default function Table() {
       return (
         <tr key={task.id}
           className={`${i % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}
+          data-testid='task'
         >
-          <td>
-            <div className="flex p-2 m-1md:p-4 text-left items-center">
+          <td
+            data-testid={`task-id-${task.id}`}
+          >
+            <div
+              className="flex p-2 m-1md:p-4 text-left items-center"
+              data-testid={`task-description-${task.id}`}>
               {task.description}
               {EditAction(task)}
             </div>
           </td>
-          <td className="text-left p-2 md:p-4 items-center">{task.status}</td>
-          <td className="text-left p-2 md:p-4 items-center">{task.date}</td>
+          <td
+            className="text-left p-2 md:p-4 items-center"
+            data-testid={`task-status-${task.id}`}>
+            {task.status}
+          </td>
+          <td
+            className="text-left p-2 md:p-4 items-center"
+            data-testid={`task-date-${task.id}`}>
+            {task.date}
+          </td>
           {tableActions(task)}
         </tr>
       )
@@ -55,7 +68,10 @@ export default function Table() {
   }
 
   return (
-    <table className="w-full rounded-md md:rounded-xl overflow-hidden">
+    <table
+      className="w-full rounded-md md:rounded-xl overflow-hidden"
+      data-testid="table"
+    >
       <thead className={`
         text-gray-100
         bg-gradient-to-r from-lime-600 to-purple-800

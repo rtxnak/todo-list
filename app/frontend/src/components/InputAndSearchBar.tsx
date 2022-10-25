@@ -23,7 +23,9 @@ export default function InputAndSearchBar() {
   }
 
   return (
-    <div>
+    <div
+      data-testid="inputAndSearchBar"
+    >
       <div>
         {onSearch ? (
           <label className="flex justify-center font-bold text-xl bg-purple-200 md:py-2 md:mx-2">
