@@ -45,19 +45,22 @@ To search a task, you have to activate Search Mode by clicking on button![image]
  - [x] Update a task description;
  - [x] Update the status of the task;
  - [x] Sort the tasks by description, status or date;
- - [ ] Front End tests;
- - [ ] Back End tests;
+ - [x] Back End integration tests;
+ - [x] Front End unit tests;
+
 
 ## Skills 
 On FrontEnd:
  - React, Next, TypeScript and Tailwindcss to create the pages;
  - React useState, useEffect and Hooks to manage state;
+ - Unit test using Jest;
  
 On BackEnd:
   - Use Docker and Docker-compose to manage container environment;
   - Use MSC architecture;
   - Use TypeScript and OOP(Object-Oriented Programming) with SOLID principles;
   - Use Express framework from Node.js and ORM library Sequelize for MySQL database modeling;
+  - Integration tests using Mocha, chain & sinnon;
 
 ## Opening the app locally
 On terminal:
