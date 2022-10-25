@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { TaskContext } from '../hooks/taskContext'
-import Table from '../components/Table'
+import { TaskContext } from '../../hooks/taskContext'
+import Table from '../../components/Table'
 
 
 const tasksMock = [{ id: 1, description: "first task", status: "pending", date: "02/02/2002" }, { id: 2, description: "second task", status: "ongoing", date: "02/02/1990" }, { id: 3, description: "third task", status: "done", date: "02/02/2020" }, { id: 4, description: "fourth task", status: "pending", date: "02/02/2010" }]
